@@ -22,7 +22,7 @@ system("plink --bfile Dip_Data --genome full --min 0.4")
 
 # Write IBD results to a .txt file, for manual investigation as required.
 genome <- read.table("plink.genome", header = TRUE, sep = "", stringsAsFactors = FALSE)
-write.table(genome, "Dip_IBD.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+write.table(genome, "C:/Users/curly/Desktop/Apple Genotyping/Results/Parent Pedigree Analysis/Diploid Results/Dip_IBD.txt", sep = "\t", row.names = FALSE, quote = FALSE)
 
 
 # Set file input/output paths ---------------------------------------------
