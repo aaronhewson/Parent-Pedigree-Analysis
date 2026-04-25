@@ -5,6 +5,7 @@
 # Script requires data to be in PLINK binary (bed) format, and to use PLINK to estimate IBD.
 # PLINK version used: PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)
 
+# Prior to using this script, ensure SNP data is in PLINK .ped/.map format. Remove all duplicates and all triploids.
 
 # Format data with PLINK --------------------------------------------------
 # In IBD calculation, a minimum value X is chosen to reduce output size. Parent-offspring pair should have IBD = ~0.5.
