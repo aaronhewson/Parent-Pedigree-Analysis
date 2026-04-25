@@ -187,8 +187,8 @@ rm(indiv, nb.C.P.this.ind, indiv.name, indiv.gt, par1, par1.name, par1.gt,
 
 write.table(trios.test.df,
             file = filename.trio.output,
-            sep = "\t",quote = FALSE, row.names = FALSE, col.names = FALSE )
+            sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("Offspring","Parent1","Parent2","Mendelian_Errors") )
 
 write.table(duos.to.test.df,
             file = filename.duo.output,
-            sep = "\t",quote = FALSE, row.names = FALSE, col.names = FALSE )
+            sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("IID1","IID2","Mendelian_Errors") )
