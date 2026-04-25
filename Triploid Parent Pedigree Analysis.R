@@ -16,7 +16,7 @@
 setwd("C:/Users/curly/Desktop/Apple Genotyping/Methods/Parent Pedigree Analysis/Inputs/Trip")
 
 # Changing format from .ped to .bed
-system("plink --file Trip_No_Dupe --make-bed --out Dip_Data")
+system("plink --file Trip_No_Dupe --make-bed --out Trip_Data")
 
 # Run IBD calculation to generate .genome file, with a minimum IBD threshold
 system("plink --bfile Trip_Data --genome full --min 0.4")
@@ -192,4 +192,4 @@ write.table(trios.test.df,
 
 write.table(duos.to.test.df,
             file = filename.duo.output,
-            sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("IID1","IID2","Mendelian_Errors") )
+            sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("IID1","IID2","Mendelian_Errors","Test_As_Trio?") )
