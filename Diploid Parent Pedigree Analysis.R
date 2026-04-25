@@ -112,14 +112,19 @@ rm(ind1, name.ind1, AA.ind1, BB.ind1, all.ind2)
 
 duos.to.test.df <- duos.to.test.df[order(duos.to.test.df$menderr),]
 
-# Plot ranked numbers of Mendelian to decide the threshold for declaring parent-offspring duos
+# Plot ranked numbers of Mendelian errors to decide the threshold for declaring parent-offspring duos
 plot(duos.to.test.df$menderr, ylab = "nb mendelian errors")
 
-zoom.region <- 25000:35000 # Adjust the region of the plot to zoom in to better decide the threshold
+zoom.region <- 4000:6000 # Adjust the region of the plot to zoom in to better decide the threshold
 plot(duos.to.test.df$menderr[zoom.region], ylab = "nb mendelian errors")
 
+#Export plot of Mendelian errors
+png(filename = "C:/Users/curly/Desktop/Apple Genotyping/Results/Parent Pedigree Analysis/Diploid Results/ME_plot.png", width = 600, height = 600)
+plot(duos.to.test.df$menderr, ylab = "Number of Mendelian errors", xlab = "Ranked Pairs of Individuals", main = "Mendelian Errors in Potential Parent-Offspring Pairs")
+dev.off()
+
 # Define threshold for parent-offspring duos and apply it
-threshold.PO <- nb.markers * 0.03 # adjust according to data
+threshold.PO <- nb.markers * 0.03 # using an excessive threshold. Manual investigation later will determine cutoff for determination.
 duos.to.test.df <- cbind(duos.to.test.df,
                          CP.infer = rep(0, nrow(duos.to.test.df)))
 duos.to.test.df$CP.infer[duos.to.test.df$menderr < threshold.PO] <- 1
@@ -134,13 +139,13 @@ nb.C.P.by.indiv <-
 CP.list <- vector("list", length = length(nb.C.P.by.indiv))
 names(CP.list) <- names(nb.C.P.by.indiv)
 
-for(indiv in names(nb.C.P.by.indiv))
+for(indiv in names(nb.C.P.by.indiv)){
   CP.list[[indiv]] <-
   sort(c(duos.to.test.df[duos.to.test.df$CP.infer == 1 &
                            duos.to.test.df$IID1 == indiv, "IID2"],
          duos.to.test.df[duos.to.test.df$CP.infer == 1 &
                            duos.to.test.df$IID2 == indiv, "IID1"]))
-
+}
 
 # Test potential trios for Mendelian errors -------------------------------
 
@@ -149,8 +154,7 @@ trios.test.df <- data.frame(
         dimnames = list(NULL, c("indiv", "Parent1", "Parent2", "nb.inc.all.mk"))),
   stringsAsFactors = FALSE)
 
-for(indiv in #1:10) {
-    seq_along(CP.list)) {
+for(indiv in seq_along(CP.list)) {
   nb.C.P.this.ind <- length(CP.list[[indiv]])
   if(nb.C.P.this.ind > 1) {
     indiv.name <- names(CP.list)[indiv]
@@ -174,6 +178,7 @@ for(indiv in #1:10) {
     }
   }
 }
+
 rm(indiv, nb.C.P.this.ind, indiv.name, indiv.gt, par1, par1.name, par1.gt,
    par2, par2.name, par2.gt, mend.inc, trio.test.here)
 
