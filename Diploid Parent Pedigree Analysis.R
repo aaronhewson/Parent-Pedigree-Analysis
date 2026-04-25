@@ -191,4 +191,4 @@ write.table(trios.test.df,
 
 write.table(duos.to.test.df,
             file = filename.duo.output,
-            sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("IID1","IID2","Mendelian_Errors") )
+            sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("IID1","IID2","Mendelian_Errors", "Test_As_Trio?") )
