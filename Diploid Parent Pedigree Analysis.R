@@ -227,6 +227,6 @@ ggplot(ME_log, aes(fill=Correct_Pedigree, y=Mendelian_Errors,x=Order)) +
   labs(title = "Mendelian Error Thresholds for Parent-Offspring Trios", x= "Assigned Parent-Offspring Trios", y="Number of Mendelian Errors") +
   coord_cartesian(xlim = c(0, 1200), ylim = c(1, 3.25))+
   scale_y_continuous(breaks = c(1, 2, 3), labels = c("0", "10", "100"))+
-  scale_fill_manual(name = "Correct Pedigree", values = c("#FA114F", "#828282", "#11FA47"))+
+  scale_fill_manual(name = "Correct Pedigree", values = c("#FA114F", "#FAF211", "#11FA47"))+
   theme(axis.ticks.x=element_blank(), axis.text.x=element_blank())
 
