@@ -192,3 +192,41 @@ write.table(trios.test.df,
 write.table(duos.to.test.df,
             file = filename.duo.output,
             sep = "\t",quote = FALSE, row.names = FALSE, col.names = c("IID1","IID2","Mendelian_Errors", "Test_As_Trio?") )
+
+
+
+# Plot histogram for ME versus known relationships ------------------------
+
+#Load ME counts that have been checked for known relationships
+ME <- read.table("C:/Users/curly/Desktop/Apple Genotyping/Methods/Parent Pedigree Analysis/Inputs/Dip/ME_rels.txt", header = TRUE)
+
+#Plot histogram of ME counts, removing outliers first for visualization ease
+ME_h <- ME
+ME_h <- ME_h[ME_h$Mendelian_Errors <= 1000,]
+
+ggplot(ME_h, aes(x=Mendelian_Errors)) + 
+  geom_histogram(aes(fill= after_stat(x<73)), boundary = 73, color = "black", bins = 1000, binwidth = 10) +
+  scale_fill_manual(name = "", labels = c("Inferred parent-offspring trios","Rejected trios"), values = c("#3B3B3B", "lightgrey")) +
+  geom_vline(xintercept = 73, linetype = "dashed") +
+  theme_classic()+
+  labs(y = "", x = "Number of Mendelian Errors")+
+  guides(x = guide_axis(cap = "both"), y = guide_axis(cap = "both"))+
+  theme(legend.position = c(legend.position=c(.80,.95)), legend.text = element_text(size = 8))
+
+#Subset list closer to ME cutoff for known trios
+ME_sub <- ME[ME$Order[1:1200],]
+
+#Log transform ME 
+ME_log <- ME_sub
+ME_log$Mendelian_Errors <- log10(ME_log$Mendelian_Errors+1) + 1
+
+#Plot log transformed ME around threshold
+ggplot(ME_log, aes(fill=Correct_Pedigree, y=Mendelian_Errors,x=Order)) + 
+  geom_bar(position="stack", stat="identity") + 
+  theme_bw()+
+  labs(title = "Mendelian Error Thresholds for Parent-Offspring Trios", x= "Assigned Parent-Offspring Trios", y="Number of Mendelian Errors") +
+  coord_cartesian(xlim = c(0, 1200), ylim = c(1, 3.25))+
+  scale_y_continuous(breaks = c(1, 2, 3), labels = c("0", "10", "100"))+
+  scale_fill_manual(name = "Correct Pedigree", values = c("#FA114F", "#828282", "#11FA47"))+
+  theme(axis.ticks.x=element_blank(), axis.text.x=element_blank())
+
